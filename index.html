@@ -96,20 +96,20 @@ tbody td{padding:9px 12px}
       <div class="card-title">Upload Today's CC Transaction Report</div>
       <div class="daily-badge">Run every morning after downloading from Valant</div>
       <div class="drop-zone" id="drop-zone">
-        <div class="drop-icon" id="drop-icon">&#128179;</div>
+        <div class="drop-icon" id="drop-icon">💳</div>
         <div class="drop-label" id="drop-label">Drop your Valant CC report here</div>
         <div class="drop-sub" id="drop-sub">Click or drag and drop - IntegratedCCTransactions .xlsx file</div>
       </div>
       <input type="file" id="file-input" accept=".xlsx,.csv,.xls">
       <div id="upload-alert" style="margin-top:12px"></div>
-      <div class="actions"><button class="btn btn-primary" id="btn-next-1" disabled>Preview &#8594;</button></div>
+      <div class="actions"><button class="btn btn-primary" id="btn-next-1" disabled>Preview →</button></div>
     </div>
   </div>
   <div class="section" id="section-2">
     <div class="card">
       <div class="card-title">Preview Before Syncing</div>
       <div class="preview-stats" id="preview-stats"></div>
-      <div class="alert alert-warn"><span>&#9888;</span><span>Decline Reason, Count, and Last Declined Date will be updated for existing patients. <strong>Notes, Outreach Method, and Follow-Up Date will never be overwritten.</strong> Patients no longer in this file will be automatically marked Resolved.</span></div>
+      <div class="alert alert-warn"><span>⚠</span><span>Decline Reason, Count, and Last Declined Date will be updated for existing patients. <strong>Notes, Outreach Method, and Follow-Up Date will never be overwritten.</strong> Patients no longer in this file will be automatically marked Resolved.</span></div>
       <div class="table-wrap"><div class="preview-scroll">
         <table>
           <thead><tr><th>Patient ID</th><th>Decline Reason</th><th>Decline Count</th><th>Last Declined</th></tr></thead>
@@ -118,7 +118,7 @@ tbody td{padding:9px 12px}
       </div></div>
       <div class="actions">
         <button class="btn btn-secondary" id="btn-back-2">Back</button>
-        <button class="btn btn-primary" id="btn-sync-go">Sync to Notion &#8594;</button>
+        <button class="btn btn-primary" id="btn-sync-go">Sync to Notion →</button>
       </div>
     </div>
   </div>
@@ -126,10 +126,10 @@ tbody td{padding:9px 12px}
     <div class="card">
       <div class="card-title">Sync to Notion</div>
       <div id="sync-ready">
-        <div class="alert alert-warn"><span>&#9888;</span><span>Ready to sync to Declined CC Outreach database. Press Start when ready.</span></div>
+        <div class="alert alert-warn"><span>⚠</span><span>Ready to sync to Declined CC Outreach database. Press Start when ready.</span></div>
         <div class="actions" style="margin-top:0">
           <button class="btn btn-secondary" id="btn-back-3">Back</button>
-          <button class="btn btn-primary" id="btn-start-sync">&#9654; Start Sync</button>
+          <button class="btn btn-primary" id="btn-start-sync">▶ Start Sync</button>
         </div>
       </div>
       <div id="sync-progress" style="display:none">
@@ -139,8 +139,8 @@ tbody td{padding:9px 12px}
       </div>
       <div id="sync-results" style="display:none;margin-top:20px">
         <div class="result-grid" id="result-grid"></div>
-        <div class="open-notion-wrap"><a href="https://www.notion.so/87f9e40e174a48828ca9badddca2930d" target="_blank" class="notion-link">Open Declined CC Outreach in Notion &#8599;</a></div>
-        <div class="actions" style="margin-top:16px"><button class="btn btn-secondary" id="btn-reset">&#8635; Sync Another File</button></div>
+        <div class="open-notion-wrap"><a href="https://www.notion.so/87f9e40e174a48828ca9badddca2930d" target="_blank" class="notion-link">Open Declined CC Outreach in Notion ↗</a></div>
+        <div class="actions" style="margin-top:16px"><button class="btn btn-secondary" id="btn-reset">↻ Sync Another File</button></div>
       </div>
     </div>
   </div>
@@ -212,7 +212,7 @@ function processFile(file){
       state.patients=Object.values(map);
       state.rawPatientIds=new Set(Object.keys(map));
       dz.classList.add('has-file');
-      document.getElementById('drop-icon').textContent='ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ';
+      document.getElementById('drop-icon').textContent='ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ';
       document.getElementById('drop-label').textContent=file.name;
       document.getElementById('drop-sub').textContent=state.patients.length+' unique patients with declined transactions';
       document.getElementById('btn-next-1').disabled=false;
@@ -334,12 +334,12 @@ async function nFetch(path,method,body){
   return data;
 }
 
-function showAlert(el,type,msg){el.innerHTML='<div class="alert alert-'+type+'"><span>'+(type==='ok'?'&#10003;':'&#9888;')+'</span><span>'+msg+'</span></div>';}
+function showAlert(el,type,msg){el.innerHTML='<div class="alert alert-'+type+'"><span>'+(type==='ok'?'✓':'⚠')+'</span><span>'+msg+'</span></div>';}
 
 function resetTool(){
   state.patients=[];state.rawPatientIds=new Set();
   dz.classList.remove('has-file');
-  document.getElementById('drop-icon').textContent='&#128179;';
+  document.getElementById('drop-icon').textContent='💳';
   document.getElementById('drop-label').textContent='Drop your Valant CC report here';
   document.getElementById('drop-sub').textContent='Click or drag and drop - IntegratedCCTransactions .xlsx file';
   document.getElementById('btn-next-1').disabled=true;
