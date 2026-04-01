@@ -212,7 +212,7 @@ function processFile(file){
       state.patients=Object.values(map);
       state.rawPatientIds=new Set(Object.keys(map));
       dz.classList.add('has-file');
-      document.getElementById('drop-icon').textContent='&#10003;';
+      document.getElementById('drop-icon').textContent='✓';
       document.getElementById('drop-label').textContent=file.name;
       document.getElementById('drop-sub').textContent=state.patients.length+' unique patients with declined transactions';
       document.getElementById('btn-next-1').disabled=false;
