@@ -212,7 +212,7 @@ function processFile(file){
       state.patients=Object.values(map);
       state.rawPatientIds=new Set(Object.keys(map));
       dz.classList.add('has-file');
-      document.getElementById('drop-icon').textContent='ÃÂ¢ÃÂÃÂ';
+      document.getElementById('drop-icon').textContent='ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ';
       document.getElementById('drop-label').textContent=file.name;
       document.getElementById('drop-sub').textContent=state.patients.length+' unique patients with declined transactions';
       document.getElementById('btn-next-1').disabled=false;
@@ -317,7 +317,7 @@ async function fetchAll(){
     var body={page_size:100};if(cursor)body.start_cursor=cursor;
     var res=await nFetch('/databases/'+DB_ID+'/query','POST',body);
     (res.results||[]).forEach(function(page){
-      var pid=page.properties&&page.properties['Patient ID']&&page.properties['Patient ID'].rich_text&&page.properties['Patient ID'].rich_text[0]&&page.properties['Patient ID'].rich_text[0].plain_text||'';
+      var pid=page.properties&&page.properties['Patient ID']&&page.properties['Patient ID'].title&&page.properties['Patient ID'].title[0]&&page.properties['Patient ID'].title[0].plain_text||'';
       var status=page.properties&&page.properties['Status']&&page.properties['Status'].select&&page.properties['Status'].select.name||'';
       var name=page.properties&&page.properties['Patient Name']&&page.properties['Patient Name'].title&&page.properties['Patient Name'].title[0]&&page.properties['Patient Name'].title[0].plain_text||'';
       if(pid)map[pid]={pageId:page.id,status:status,name:name};
