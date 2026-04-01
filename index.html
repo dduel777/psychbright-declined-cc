@@ -6,7 +6,7 @@
 <title>PsychBright - Declined CC Sync</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-:root{--teal:#0d6e6e;--teal-light:#e6f4f4;--teal-mid:#b2d8d8;--slate:#1e2d2d;--mid:#4a5e5e;--border:#d0e0e0;--bg:#f5fafa;--white:#fff;--red:#c0392b;--red-light:#fdecea;--amber:#d97706;--amber-light:#fef3c7;--green:#15803d;--green-light:#dcfce7;--gray:#6b7280;--gray-light:#f3f4f6;--radius:8px}
+:root{--teal:#0d6e6e;--teal-light:#e6f4f4;--teal-mid:#b2d8d8;--slate:#1e2d2d;--mid:#4a5e5e;--border:#d0e0e0;--bg:#f5fafa;--red:#c0392b;--red-light:#fdecea;--amber:#d97706;--amber-light:#fef3c7;--green:#15803d;--green-light:#dcfce7;--gray:#6b7280;--gray-light:#f3f4f6;--radius:8px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:sans-serif;background:var(--bg);color:var(--slate);min-height:100vh}
 header{background:var(--slate);color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between}
@@ -22,11 +22,10 @@ header .sub{font-size:12px;color:var(--teal-mid)}
 .main{max-width:900px;margin:32px auto;padding:0 24px}
 .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:20px}
 .card-title{font-size:13px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.08em;margin-bottom:18px}
-.daily-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;background:var(--teal-light);color:var(--teal);font-size:12px;font-weight:600;margin-bottom:20px}
-.drop-zone{border:2px dashed var(--teal-mid);border-radius:var(--radius);padding:64px 32px;text-align:center;cursor:pointer;transition:all .2s;background:var(--teal-light)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;background:var(--teal-light);color:var(--teal);font-size:12px;font-weight:600;margin-bottom:20px}
+.drop-zone{border:2px dashed var(--teal-mid);border-radius:var(--radius);padding:48px 32px;text-align:center;cursor:pointer;transition:all .2s;background:var(--teal-light)}
 .drop-zone:hover,.drop-zone.drag-over{border-color:var(--teal);background:#d0ecec}
 .drop-zone.has-file{border-style:solid;border-color:var(--green);background:var(--green-light)}
-.drop-icon{font-size:48px;margin-bottom:16px}
 .drop-label{font-size:16px;font-weight:600;color:var(--teal);margin-bottom:8px}
 .drop-sub{font-size:13px;color:var(--mid)}
 .drop-zone.has-file .drop-label{color:var(--green)}
@@ -86,30 +85,29 @@ tbody td{padding:9px 12px}
   <div class="sub" id="header-date"></div>
 </header>
 <div class="steps-bar">
-  <div class="step-tab active" id="tab-1"><span class="step-num">1</span>Upload File</div>
-  <div class="step-tab" id="tab-2"><span class="step-num">2</span>Preview</div>
-  <div class="step-tab" id="tab-3"><span class="step-num">3</span>Sync to Notion</div>
+  <div class="step-tab active" id="tab-1"><span class="step-num">1</span> Upload File</div>
+  <div class="step-tab" id="tab-2"><span class="step-num">2</span> Preview</div>
+  <div class="step-tab" id="tab-3"><span class="step-num">3</span> Sync to Notion</div>
 </div>
 <div class="main">
   <div class="section visible" id="section-1">
     <div class="card">
       <div class="card-title">Upload Today's CC Transaction Report</div>
-      <div class="daily-badge">Run every morning after downloading from Valant</div>
+      <div class="badge">Run every morning after downloading from Valant</div>
       <div class="drop-zone" id="drop-zone">
-        <div class="drop-icon" id="drop-icon">&#128179;</div>
         <div class="drop-label" id="drop-label">Drop your Valant CC report here</div>
         <div class="drop-sub" id="drop-sub">Click or drag and drop - IntegratedCCTransactions .xlsx file</div>
       </div>
       <input type="file" id="file-input" accept=".xlsx,.csv,.xls">
       <div id="upload-alert" style="margin-top:12px"></div>
-      <div class="actions"><button class="btn btn-primary" id="btn-next-1" disabled>Preview &#8594;</button></div>
+      <div class="actions"><button class="btn btn-primary" id="btn-next-1" disabled>Preview</button></div>
     </div>
   </div>
   <div class="section" id="section-2">
     <div class="card">
       <div class="card-title">Preview Before Syncing</div>
       <div class="preview-stats" id="preview-stats"></div>
-      <div class="alert alert-warn"><span>&#9888;</span><span>Decline Reason, Count, and Last Declined Date will be updated for existing patients. <strong>Notes, Outreach Method, and Follow-Up Date will never be overwritten.</strong> Patients no longer in this file will be automatically marked Resolved.</span></div>
+      <div class="alert alert-warn"><span>Note:</span><span>Decline Reason, Count, and Last Declined Date will be updated for existing patients. <strong>Notes, Outreach Method, and Follow-Up Date will never be overwritten.</strong> Patients no longer in this file will be automatically marked Resolved.</span></div>
       <div class="table-wrap"><div class="preview-scroll">
         <table>
           <thead><tr><th>Patient ID</th><th>Decline Reason</th><th>Decline Count</th><th>Last Declined</th></tr></thead>
@@ -118,7 +116,7 @@ tbody td{padding:9px 12px}
       </div></div>
       <div class="actions">
         <button class="btn btn-secondary" id="btn-back-2">Back</button>
-        <button class="btn btn-primary" id="btn-sync-go">Sync to Notion &#8594;</button>
+        <button class="btn btn-primary" id="btn-sync-go">Sync to Notion</button>
       </div>
     </div>
   </div>
@@ -126,10 +124,10 @@ tbody td{padding:9px 12px}
     <div class="card">
       <div class="card-title">Sync to Notion</div>
       <div id="sync-ready">
-        <div class="alert alert-warn"><span>&#9888;</span><span>Ready to sync to Declined CC Outreach database. Press Start when ready.</span></div>
+        <div class="alert alert-warn"><span>Ready:</span><span>Ready to sync to Declined CC Outreach database. Press Start when ready.</span></div>
         <div class="actions" style="margin-top:0">
           <button class="btn btn-secondary" id="btn-back-3">Back</button>
-          <button class="btn btn-primary" id="btn-start-sync">&#9654; Start Sync</button>
+          <button class="btn btn-primary" id="btn-start-sync">Start Sync</button>
         </div>
       </div>
       <div id="sync-progress" style="display:none">
@@ -139,14 +137,14 @@ tbody td{padding:9px 12px}
       </div>
       <div id="sync-results" style="display:none;margin-top:20px">
         <div class="result-grid" id="result-grid"></div>
-        <div class="open-notion-wrap"><a href="https://www.notion.so/87f9e40e174a48828ca9badddca2930d" target="_blank" class="notion-link">Open Declined CC Outreach in Notion &#8599;</a></div>
-        <div class="actions" style="margin-top:16px"><button class="btn btn-secondary" id="btn-reset">&#8635; Sync Another File</button></div>
+        <div class="open-notion-wrap"><a href="https://www.notion.so/87f9e40e174a48828ca9badddca2930d" target="_blank" class="notion-link">Open Declined CC Outreach in Notion</a></div>
+        <div class="actions" style="margin-top:16px"><button class="btn btn-secondary" id="btn-reset">Sync Another File</button></div>
       </div>
     </div>
   </div>
 </div>
 <script>
-const DB_ID='87f9e40e-174a-4882-8ca9-badddca2930d';
+var DB_ID='87f9e40e-174a-4882-8ca9-badddca2930d';
 var state={patients:[],rawPatientIds:new Set()};
 
 document.getElementById('header-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
@@ -176,11 +174,11 @@ function goTo(s){
 
 function categorize(raw){
   var r=String(raw||'').toUpperCase();
-  if(r.includes('NSF'))return 'NSF';
-  if(r.includes('CLOSED'))return 'Card Closed';
-  if(r.includes('EXP')||r.includes('5001'))return 'Expired Card';
-  if(r.includes('FRAUD'))return 'Suspected Fraud';
-  if(r.includes('BLOCKED'))return 'Card Blocked';
+  if(r.indexOf('NSF')>=0)return 'NSF';
+  if(r.indexOf('CLOSED')>=0)return 'Card Closed';
+  if(r.indexOf('EXP')>=0||r.indexOf('5001')>=0)return 'Expired Card';
+  if(r.indexOf('FRAUD')>=0)return 'Suspected Fraud';
+  if(r.indexOf('BLOCKED')>=0)return 'Card Blocked';
   return 'General Decline';
 }
 
@@ -201,18 +199,16 @@ function processFile(file){
       declined.forEach(function(r){
         var pid=String(r.PatientId||'').trim();
         if(!pid)return;
-        var name=String(r.PatientId||'').trim();
         var reason=categorize(r.GatewayError||r.TransactionStatus||'');
         var tdate=r.TransactionDate instanceof Date?r.TransactionDate:new Date(r.TransactionDate);
         if(isNaN(tdate.getTime()))tdate=new Date();
-        if(!map[pid]){map[pid]={patientId:pid,patientName:name,declineReason:reason,declineCount:0,lastDeclinedDate:tdate};}
+        if(!map[pid]){map[pid]={patientId:pid,declineReason:reason,declineCount:0,lastDeclinedDate:tdate};}
         map[pid].declineCount++;
         if(tdate>map[pid].lastDeclinedDate){map[pid].lastDeclinedDate=tdate;map[pid].declineReason=reason;}
       });
       state.patients=Object.values(map);
       state.rawPatientIds=new Set(Object.keys(map));
       dz.classList.add('has-file');
-      document.getElementById('drop-icon').textContent='ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ';
       document.getElementById('drop-label').textContent=file.name;
       document.getElementById('drop-sub').textContent=state.patients.length+' unique patients with declined transactions';
       document.getElementById('btn-next-1').disabled=false;
@@ -252,38 +248,39 @@ async function startSync(){
     addLog('Loading existing Notion records...');
     setP(0,10,'Fetching existing patients...');
     var existingMap=await fetchAll();
-    addLog('  Found '+Object.keys(existingMap).length+' existing records.','log-ok');
+    addLog('Found '+Object.keys(existingMap).length+' existing records.','log-ok');
     var total=state.patients.length;
     for(var i=0;i<total;i++){
       var p=state.patients[i];
-      setP(i+1,total+10,'Processing '+p.patientName+'...');
+      setP(i+1,total+10,'Processing '+p.patientId+'...');
       var existing=existingMap[p.patientId];
       var dateStr=p.lastDeclinedDate instanceof Date?p.lastDeclinedDate.toISOString().split('T')[0]:null;
       if(existing){
         try{
           await nFetch('/pages/'+existing.pageId,'PATCH',{properties:{
-            'Patient ID':{title:[{text:{content:p.patientId}}]},'Decline Reason':{select:{name:p.declineReason}},
+            'Patient ID':{title:[{text:{content:p.patientId}}]},
+            'Decline Reason':{select:{name:p.declineReason}},
             'Decline Count':{number:p.declineCount},
             'Last Declined Date':dateStr?{date:{start:dateStr}}:{date:null}
           }});
-          addLog('  UPDATE '+p.patientId+' - '+p.patientName+' ('+p.declineReason+' x'+p.declineCount+')','log-ok');
+          addLog('UPDATE '+p.patientId+' ('+p.declineReason+' x'+p.declineCount+')','log-ok');
           updated++;
-        }catch(e){addLog('  ERROR '+p.patientId+' - '+e.message,'log-err');errors++;}
+        }catch(e){addLog('ERROR '+p.patientId+' - '+e.message,'log-err');errors++;}
       }else{
         try{
           await nFetch('/pages','POST',{parent:{database_id:DB_ID},properties:{
+            'Patient ID':{title:[{text:{content:p.patientId}}]},
             'Decline Reason':{select:{name:p.declineReason}},
             'Decline Count':{number:p.declineCount},
             'Last Declined Date':dateStr?{date:{start:dateStr}}:{date:null},
             'Status':{select:{name:'Needs Outreach'}}
           }});
-          addLog('  + CREATE '+p.patientId+' - '+p.patientName+' ('+p.declineReason+')','log-new');
+          addLog('CREATE '+p.patientId+' ('+p.declineReason+')','log-new');
           created++;
-        }catch(e){addLog('  ERROR '+p.patientId+' - '+e.message,'log-err');errors++;}
+        }catch(e){addLog('ERROR '+p.patientId+' - '+e.message,'log-err');errors++;}
       }
       if(i%5===4)await new Promise(function(r){setTimeout(r,300)});
     }
-    // Auto-resolve patients no longer in today's file
     addLog('Checking for resolved patients...');
     var toResolve=Object.entries(existingMap).filter(function(entry){
       return !state.rawPatientIds.has(entry[0])&&(entry[1].status==='Needs Outreach'||entry[1].status==='Contacted');
@@ -292,9 +289,9 @@ async function startSync(){
       var entry=toResolve[j];
       try{
         await nFetch('/pages/'+entry[1].pageId,'PATCH',{properties:{'Status':{select:{name:'Resolved'}}}});
-        addLog('  Resolved '+entry[0]+' - '+entry[1].name+' (no longer in file)','log-resolve');
+        addLog('Resolved '+entry[0]+' (no longer in file)','log-resolve');
         resolved++;
-      }catch(e){addLog('  ERROR resolving '+entry[0]+' - '+e.message,'log-err');errors++;}
+      }catch(e){addLog('ERROR resolving '+entry[0]+' - '+e.message,'log-err');errors++;}
       if(j%5===4)await new Promise(function(r){setTimeout(r,300)});
     }
     setP(total,total,'Sync complete!');
@@ -316,8 +313,7 @@ async function fetchAll(){
     (res.results||[]).forEach(function(page){
       var pid=page.properties&&page.properties['Patient ID']&&page.properties['Patient ID'].title&&page.properties['Patient ID'].title[0]&&page.properties['Patient ID'].title[0].plain_text||'';
       var status=page.properties&&page.properties['Status']&&page.properties['Status'].select&&page.properties['Status'].select.name||'';
-      var name=page.properties&&page.properties['Patient ID']&&page.properties['Patient ID'].title&&page.properties['Patient ID'].title[0]&&page.properties['Patient ID'].title[0].plain_text||'';
-      if(pid)map[pid]={pageId:page.id,status:status,name:name};
+      if(pid)map[pid]={pageId:page.id,status:status};
     });
     hasMore=res.has_more;cursor=res.next_cursor;
   }
@@ -331,12 +327,14 @@ async function nFetch(path,method,body){
   return data;
 }
 
-function showAlert(el,type,msg){el.innerHTML='<div class="alert alert-'+type+'"><span>'+(type==='ok'?'&#10003;':'&#9888;')+'</span><span>'+msg+'</span></div>';}
+function showAlert(el,type,msg){
+  var icon=type==='ok'?'OK:':'Note:';
+  el.innerHTML='<div class="alert alert-'+type+'"><span>'+icon+'</span><span>'+msg+'</span></div>';
+}
 
 function resetTool(){
   state.patients=[];state.rawPatientIds=new Set();
   dz.classList.remove('has-file');
-  document.getElementById('drop-icon').textContent='&#128179;';
   document.getElementById('drop-label').textContent='Drop your Valant CC report here';
   document.getElementById('drop-sub').textContent='Click or drag and drop - IntegratedCCTransactions .xlsx file';
   document.getElementById('btn-next-1').disabled=true;
