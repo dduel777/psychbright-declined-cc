@@ -201,7 +201,7 @@ function processFile(file){
       declined.forEach(function(r){
         var pid=String(r.PatientId||'').trim();
         if(!pid)return;
-        var name=String(r.UserName||'').trim();
+        var name=String(r.PatientId||'').trim();
         var reason=categorize(r.GatewayError||r.TransactionStatus||'');
         var tdate=r.TransactionDate instanceof Date?r.TransactionDate:new Date(r.TransactionDate);
         if(isNaN(tdate.getTime()))tdate=new Date();
@@ -212,7 +212,7 @@ function processFile(file){
       state.patients=Object.values(map);
       state.rawPatientIds=new Set(Object.keys(map));
       dz.classList.add('has-file');
-      document.getElementById('drop-icon').textContent='✓';
+      document.getElementById('drop-icon').textContent='â';
       document.getElementById('drop-label').textContent=file.name;
       document.getElementById('drop-sub').textContent=state.patients.length+' unique patients with declined transactions';
       document.getElementById('btn-next-1').disabled=false;
