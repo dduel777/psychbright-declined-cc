@@ -316,7 +316,7 @@ async function fetchAll(){
     (res.results||[]).forEach(function(page){
       var pid=page.properties&&page.properties['Patient ID']&&page.properties['Patient ID'].title&&page.properties['Patient ID'].title[0]&&page.properties['Patient ID'].title[0].plain_text||'';
       var status=page.properties&&page.properties['Status']&&page.properties['Status'].select&&page.properties['Status'].select.name||'';
-      var name=page.properties&&page.properties['Patient Name']&&page.properties['Patient Name'].title&&page.properties['Patient Name'].title[0]&&page.properties['Patient Name'].title[0].plain_text||'';
+      var name=page.properties&&page.properties['Patient ID']&&page.properties['Patient ID'].title&&page.properties['Patient ID'].title[0]&&page.properties['Patient ID'].title[0].plain_text||'';
       if(pid)map[pid]={pageId:page.id,status:status,name:name};
     });
     hasMore=res.has_more;cursor=res.next_cursor;
