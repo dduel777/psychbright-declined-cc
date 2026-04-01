@@ -112,7 +112,7 @@ tbody td{padding:9px 12px}
       <div class="alert alert-warn"><span>&#9888;</span><span>Decline Reason, Count, and Last Declined Date will be updated for existing patients. <strong>Notes, Outreach Method, and Follow-Up Date will never be overwritten.</strong> Patients no longer in this file will be automatically marked Resolved.</span></div>
       <div class="table-wrap"><div class="preview-scroll">
         <table>
-          <thead><tr><th>Patient Name</th><th>Patient ID</th><th>Decline Reason</th><th>Decline Count</th><th>Last Declined</th></tr></thead>
+          <thead><tr><th>Patient ID</th><th>Decline Reason</th><th>Decline Count</th><th>Last Declined</th></tr></thead>
           <tbody id="preview-tbody"></tbody>
         </table>
       </div></div>
@@ -212,7 +212,7 @@ function processFile(file){
       state.patients=Object.values(map);
       state.rawPatientIds=new Set(Object.keys(map));
       dz.classList.add('has-file');
-      document.getElementById('drop-icon').textContent='â';
+      document.getElementById('drop-icon').textContent='Ã¢ÂÂ';
       document.getElementById('drop-label').textContent=file.name;
       document.getElementById('drop-sub').textContent=state.patients.length+' unique patients with declined transactions';
       document.getElementById('btn-next-1').disabled=false;
@@ -236,7 +236,7 @@ function buildPreview(){
     var cls=p.declineReason==='NSF'||p.declineReason==='Card Closed'||p.declineReason==='Suspected Fraud'?'reason-red':
             p.declineReason==='Expired Card'||p.declineReason==='Card Blocked'?'reason-amber':'reason-gray';
     var d=p.lastDeclinedDate instanceof Date?p.lastDeclinedDate.toLocaleDateString('en-US'):'-';
-    return '<tr><td>'+p.patientName+'</td><td style="font-size:11px">'+p.patientId+'</td><td><span class="reason-badge '+cls+'">'+p.declineReason+'</span></td><td>'+p.declineCount+'</td><td>'+d+'</td></tr>';
+    return '<tr><td style="font-size:11px">'+p.patientId+'</td><td><span class="reason-badge '+cls+'">'+p.declineReason+'</span></td><td>'+p.declineCount+'</td><td>'+d+'</td></tr>';
   }).join('');
   goTo(2);
 }
@@ -262,7 +262,7 @@ async function startSync(){
       if(existing){
         try{
           await nFetch('/pages/'+existing.pageId,'PATCH',{properties:{
-            'Patient Name':{title:[{text:{content:p.patientName}}]},
+            'Record':{title:[{text:{content:p.patientId}}]},
             'Decline Reason':{select:{name:p.declineReason}},
             'Decline Count':{number:p.declineCount},
             'Last Declined Date':dateStr?{date:{start:dateStr}}:{date:null}
@@ -278,7 +278,7 @@ async function startSync(){
             'Decline Reason':{select:{name:p.declineReason}},
             'Decline Count':{number:p.declineCount},
             'Last Declined Date':dateStr?{date:{start:dateStr}}:{date:null},
-            'Status':{select:{name:'Needs Outreach'}}
+            'Status':{select:{name:'Needs Outreach'}},'Assigned To':{select:{name:'Irish'}}
           }});
           addLog('  + CREATE '+p.patientId+' - '+p.patientName+' ('+p.declineReason+')','log-new');
           created++;
