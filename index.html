@@ -262,8 +262,7 @@ async function startSync(){
       if(existing){
         try{
           await nFetch('/pages/'+existing.pageId,'PATCH',{properties:{
-            'Patient ID':{title:[{text:{content:p.patientId}}]},
-            'Decline Reason':{select:{name:p.declineReason}},
+            'Patient ID':{title:[{text:{content:p.patientId}}]},'Decline Reason':{select:{name:p.declineReason}},
             'Decline Count':{number:p.declineCount},
             'Last Declined Date':dateStr?{date:{start:dateStr}}:{date:null}
           }});
@@ -273,12 +272,10 @@ async function startSync(){
       }else{
         try{
           await nFetch('/pages','POST',{parent:{database_id:DB_ID},properties:{
-            'Patient Name':{title:[{text:{content:p.patientName}}]},
-            
             'Decline Reason':{select:{name:p.declineReason}},
             'Decline Count':{number:p.declineCount},
             'Last Declined Date':dateStr?{date:{start:dateStr}}:{date:null},
-            'Status':{select:{name:'Needs Outreach'}},'Assigned To':{select:{name:'Irish'}}
+            'Status':{select:{name:'Needs Outreach'}}
           }});
           addLog('  + CREATE '+p.patientId+' - '+p.patientName+' ('+p.declineReason+')','log-new');
           created++;
