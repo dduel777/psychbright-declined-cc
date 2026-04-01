@@ -212,7 +212,7 @@ function processFile(file){
       state.patients=Object.values(map);
       state.rawPatientIds=new Set(Object.keys(map));
       dz.classList.add('has-file');
-      document.getElementById('drop-icon').textContent='Ã¢ÂÂ';
+      document.getElementById('drop-icon').textContent='ÃÂ¢ÃÂÃÂ';
       document.getElementById('drop-label').textContent=file.name;
       document.getElementById('drop-sub').textContent=state.patients.length+' unique patients with declined transactions';
       document.getElementById('btn-next-1').disabled=false;
@@ -262,7 +262,7 @@ async function startSync(){
       if(existing){
         try{
           await nFetch('/pages/'+existing.pageId,'PATCH',{properties:{
-            'Record':{title:[{text:{content:p.patientId}}]},
+            'Patient ID':{title:[{text:{content:p.patientId}}]},
             'Decline Reason':{select:{name:p.declineReason}},
             'Decline Count':{number:p.declineCount},
             'Last Declined Date':dateStr?{date:{start:dateStr}}:{date:null}
@@ -274,7 +274,7 @@ async function startSync(){
         try{
           await nFetch('/pages','POST',{parent:{database_id:DB_ID},properties:{
             'Patient Name':{title:[{text:{content:p.patientName}}]},
-            'Patient ID':{rich_text:[{text:{content:p.patientId}}]},
+            
             'Decline Reason':{select:{name:p.declineReason}},
             'Decline Count':{number:p.declineCount},
             'Last Declined Date':dateStr?{date:{start:dateStr}}:{date:null},
